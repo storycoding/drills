@@ -10,6 +10,10 @@ const socketAPI = {
 	getHistory: function(cb) {
 	  socket.emit('getHistory', "user");
 	  socket.on('sendHistory', messages => cb(messages));
+	},
+
+	typing: function(text) {
+		socket.emit('typing', text);
 	}
 }
 

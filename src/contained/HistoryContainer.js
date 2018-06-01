@@ -6,18 +6,17 @@ class HistoryContainer extends Component {
 	constructor() {
 		super();
 		this.state = {
-			messages : []
+			messages : [],
+			typing: ""
 		}
 	}
 
 	componentWillMount() {
 		setInterval(() => {
-			socketAPI.getHistory( (messages) => {
-				if(this.state.messages !== messages) {
-					this.setState( {messages: messages} );
-				}
+			socketAPI.getHistory( (state) => {
+				if(this.state !== state ) { this.setState( state ) }
 			});
-		}, 100);
+		}, 1000);
 	}
 
 	render() {

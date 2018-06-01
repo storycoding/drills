@@ -17,6 +17,7 @@ class Chatbox extends Component {
 
 	handleInput = (event) => {
 		this.setState( {text : event.target.value} );
+		socketAPI.typing(event.target.value);
 	}
 
 	render() {

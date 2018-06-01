@@ -3,15 +3,20 @@ const socketAPI = require('./src/api').socketAPI;
 
 const port = process.env.port || 8000;
 
-let state = {
-	messages: []
+let history = {
+	messages: [],
+	typing: ""
 }
 
 io.on('connection', (client) => {
 
+	client.on('typing', (content) => {
+    history.typing = content;
+  });
+
   client.on('sendMessage', (content) => {
-  	state.messages.push(content);
-  	console.log(state.messages);
+  	history.messages.push(content);
+  	console.log(history.messages);
   });
 
    client.on('disconnect', function(){
@@ -19,7 +24,8 @@ io.on('connection', (client) => {
   });
 
    client.on('getHistory', function(){
-    client.emit('sendHistory', state.messages);
+   	console.log(history.typing);
+    client.emit('sendHistory', history);
   });
 });
 
