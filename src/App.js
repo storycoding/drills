@@ -1,7 +1,7 @@
-import { socketAPI } from './api';
 import React, { Component } from 'react';
 import Chatbox from './Chatbox';
 import HistoryContainer from './contained/HistoryContainer.js';
+
 import './App.css';
 
 class App extends Component {
@@ -10,7 +10,6 @@ class App extends Component {
     super(props);
     this.state = {};
   }
-  
 
   render() {
 

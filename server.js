@@ -4,15 +4,14 @@ const socketAPI = require('./src/api').socketAPI;
 const port = process.env.port || 8000;
 
 let state = {
-	messages: [],
-	count: 0
+	messages: []
 }
 
 io.on('connection', (client) => {
 
-  client.on('greet', (content) => {
-  	state.messages.push(state.count++)
-  	client.emit('broadcastGreeting', content);
+  client.on('sendMessage', (content) => {
+  	state.messages.push(content);
+  	console.log(state.messages);
   });
 
    client.on('disconnect', function(){
@@ -20,7 +19,6 @@ io.on('connection', (client) => {
   });
 
    client.on('getHistory', function(){
-  	console.log(state.messages);
     client.emit('sendHistory', state.messages);
   });
 });

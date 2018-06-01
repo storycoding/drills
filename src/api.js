@@ -3,9 +3,8 @@ const socket = openSocket('http://localhost:8000');
 
 const socketAPI = {
 
-	greet: function(cb) {
-	  socket.emit('greet', "Hi y'all!");
-	  cb();
+	sendMessage: function(text) {
+	  socket.emit('sendMessage', text);
 	},
 
 	getHistory: function(cb) {

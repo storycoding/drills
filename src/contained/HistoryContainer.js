@@ -10,16 +10,18 @@ class HistoryContainer extends Component {
 		}
 	}
 
-	componentDidMount() {
-
+	componentWillMount() {
 		setInterval(() => {
 			socketAPI.getHistory( (messages) => {
-				this.setState({ messages : messages });
-			})}, 1000);
+				if(this.state.messages !== messages) {
+					this.setState( {messages: messages} );
+				}
+			});
+		}, 100);
 	}
 
 	render() {
-		return (
+		return (	
 			<History messages={this.state.messages}></History>
 		)
 	}
