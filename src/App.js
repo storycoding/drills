@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Chatbox from './Chatbox';
 import HistoryContainer from './contained/HistoryContainer.js';
+import TypingContainer from './contained/TypingContainer.js';
 
 import './App.css';
 
@@ -17,6 +18,7 @@ class App extends Component {
       <div className="App">
         <Chatbox/>
         <HistoryContainer/>
+        <TypingContainer/>
       </div>
     );
   }
