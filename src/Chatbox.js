@@ -12,9 +12,10 @@ class Chatbox extends Component {
 	}
 
 	handleSubmit = (event) => {
+		event.preventDefault();
 		socketAPI.sendMessage(this.state);
 		this.setState( { content: "" } );
-		event.preventDefault();
+		
 	}
 
 	handleInput = (event) => {

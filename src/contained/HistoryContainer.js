@@ -20,14 +20,18 @@ class HistoryContainer extends Component {
 				target: this.state.target
 			}
 			socketAPI.getHistory( request, (messages) => {
-				if(this.state.messages.length !== messages.length ) { this.setState( messages: messages ) }
+				console.log("Server returns getHistory: ", messages);
+
+				if(this.state.messages.length !== messages.length ) {
+					this.setState( {messages: messages} );
+				}
 			});
 		}, 3000);
 	}
 
 	render() {
 		return (	
-			<History messages={this.state.messages}></History>
+			<History history={this.state.messages}></History>
 		)
 	}
 }

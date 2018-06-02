@@ -1,8 +1,9 @@
 import React from 'react';
 
 const History = (props) => {
-	const history = props.messages
-		.map( (message, index) => (
+	console.log("History props: ", props);
+	const history = props.history
+	.map( (message, index) => (
 			<p key={index}>
 				{message.author}: {message.content}
 			</p>)

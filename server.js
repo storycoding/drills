@@ -8,7 +8,12 @@ server = {};
 server.history = {
 		author: {
 			target: {
-				messages: []
+				messages: [
+					{
+						author: "author",
+						content: "Hello World!"
+					}
+				]
 			}
 		}
 };
@@ -40,12 +45,19 @@ io.on('connection', (client) => {
 
 
   client.on('sendMessage', (message) => {
-  	console.log("sendMessage message: " + message);
   	message = JSON.parse(message);
-  	const { author, target, content } = message;
-  	server.history[author][target].messages.push(content);
 
-  	console.log("server.history[author][target.]messages:", server.history[author][target].messages);
+  	const { author, target, content } = message;
+
+  	server.history[author][target].messages.push(
+  		{
+	  		author: author,
+	  		content: content
+  		});
+  	console.log("======================================");
+  	console.log("sendMessage message: " + message);
+  	console.log("server.history[author][target]messages:", server.history[author][target].messages);
+  	console.log("======================================");
   });
 
   client.on('getHistory', (request) => {
@@ -55,7 +67,8 @@ io.on('connection', (client) => {
 
    	console.log("server.history[author][target].messages:", server.history[author][target].messages);
 
-    client.emit('sendHistory', server.history[author][target].messages);
+    client.emit( 'sendHistory',
+    	JSON.stringify(server.history[author][target].messages));
   });
 
 	client.on('typed', (message) => {

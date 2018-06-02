@@ -4,13 +4,13 @@ const socket = openSocket('http://localhost:8000');
 const socketAPI = {
 
 	sendMessage: function(message) {
-	  socket.emit('sendMessage', JSON.strigify(message) );
+	  socket.emit('sendMessage', JSON.stringify(message) );
 	},
 
 	getHistory: function(request, cb) {
 		console.log("getHistory request sent:" + JSON.stringify(request) );
 	  socket.emit('getHistory', JSON.stringify(request) );
-	  socket.on('sendHistory', messages => cb(messages));
+	  socket.on('sendHistory', messages => cb(JSON.parse(messages)) );
 	},
 
 	typed: function(message) {
