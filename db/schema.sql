@@ -1,17 +1,29 @@
-CREATE DATABASE chitchat;
-\c chitchat;
+CREATE DATABASE chat;
+\c chat;
 
 CREATE TABLE users (
 	user_id VARCHAR NOT NULL,
+	password VARCHAR NOT NULL,
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE connections (
+	user_id VARCHAR NOT NULL,
+	with_id VARCHAR NOT NULL
+)
+
 CREATE TABLE messages (
 	id SERIAL PRIMARY KEY,
-	user_id VARCHAR NOT NULL,
-	content VARCHAR NOT NULL
+	content VARCHAR NOT NULL,
+	author_id VARCHAR NOT NULL,
+	target_id VARCHAR NOT NULL
 );
 
 INSERT INTO users (user_id) VALUES ('nuno');
+INSERT INTO users (user_id) VALUES ('jesus');
 
-INSERT INTO messages (user_id, content) VALUES ('nuno', 'hello world');
+INSERT INTO connections (user_id, with_id) VALUES ('nuno', 'jesus');
+
+INSERT INTO messages (content, author_id, target_id) VALUES ('Hey dude, how you doin?', 'nuno', 'jesus');
+
+INSERT INTO messages (content, author_id, target_id) VALUES ('Not much bro, how about u?', 'jesus', 'nuno');
