@@ -6,26 +6,30 @@ class TypingContainer extends Component {
 	constructor() {
 		super();
 		this.state = {
-			typing: ""
+			author: "author",
+			target: "target",
+			content: "hello"
 		}
 	}
 
 	componentWillMount() {
 		setInterval(() => {
-			socketAPI.getHistory( (state) => {
-				console.log(this.state.typing);
-				if(this.state.typing !== state.typing ) {
-						this.setState( {typing: state.typing} )
+			socketAPI.getTyping( this.state, (typing) => {
+				console.log("getTyping result: ", typing);
+				if(this.state.content !== typing) {
+					this.setState({ content: typing });
+
+					console.log("this.state: ", this.state);
+					console.log("typing: ", typing);
 				}
 			});
-		}, 100);
+		}, 3000);
 	}
 
 	render() {
 		return (
 			<div>
-				<p>poo</p>
-				<Typing typing={this.state.typing}/>
+				<Typing typing={this.state}/>
 			</div>
 		);
 	}

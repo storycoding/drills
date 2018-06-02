@@ -5,25 +5,33 @@ class Chatbox extends Component {
 	constructor() {
 		super();
 		this.state = {
-			text:""
+			author: "author",
+			target: "target",
+			content: ""
 		};
 	}
 
 	handleSubmit = (event) => {
-		console.log(this.state.text);
-		socketAPI.sendMessage(this.state.text);
+		socketAPI.sendMessage(this.state);
+		this.setState( { content: "" } );
 		event.preventDefault();
 	}
 
 	handleInput = (event) => {
-		this.setState( {text : event.target.value} );
-		socketAPI.typing(event.target.value);
+		console.log("handleInput event.target.value: ", event.target.value);
+		this.setState( {content : event.target.value} );
+		console.log("handleInput this.state: ", this.state );
+	}
+
+	componentDidUpdate() {
+		console.log("componentDidUpdate state: ", this.state);
+		socketAPI.typed(this.state);
 	}
 
 	render() {
 		return <div>
 			<form onSubmit={this.handleSubmit}>
-				<input type="text" value={this.state.text} onChange={this.handleInput}/>
+				<input type="content" value={this.state.content} onChange={this.handleInput}/>
 				<input type="submit" value="Submit"/>
 			</form>
 		</div>

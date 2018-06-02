@@ -6,6 +6,8 @@ class HistoryContainer extends Component {
 	constructor() {
 		super();
 		this.state = {
+			author: "author",
+			target: "target",
 			messages : [],
 			typing: ""
 		}
@@ -13,10 +15,14 @@ class HistoryContainer extends Component {
 
 	componentWillMount() {
 		setInterval(() => {
-			socketAPI.getHistory( (state) => {
-				if(this.state !== state ) { this.setState( state ) }
+			const request = {
+				author: this.state.author,
+				target: this.state.target
+			}
+			socketAPI.getHistory( request, (messages) => {
+				if(this.state.messages.length !== messages.length ) { this.setState( messages: messages ) }
 			});
-		}, 1000);
+		}, 3000);
 	}
 
 	render() {

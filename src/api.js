@@ -3,17 +3,28 @@ const socket = openSocket('http://localhost:8000');
 
 const socketAPI = {
 
-	sendMessage: function(text) {
-	  socket.emit('sendMessage', text);
+	sendMessage: function(message) {
+	  socket.emit('sendMessage', JSON.strigify(message) );
 	},
 
-	getHistory: function(cb) {
-	  socket.emit('getHistory', "user");
+	getHistory: function(request, cb) {
+		console.log("getHistory request sent:" + JSON.stringify(request) );
+	  socket.emit('getHistory', JSON.stringify(request) );
 	  socket.on('sendHistory', messages => cb(messages));
 	},
 
-	typing: function(text) {
-		socket.emit('typing', text);
+	typed: function(message) {
+		console.log("typed sent:" + JSON.stringify(message) );
+		socket.emit('typed', JSON.stringify(message) );
+	},
+
+	getTyping: function(request, cb) {
+		console.log("getTyping request sent:" + JSON.stringify(request) );
+	  socket.emit('getTyping', JSON.stringify(request) );
+	  socket.on('sendTyping', typing => {
+	  	console.log("server sent back for getTyping: ", typing);
+	  	cb(typing);
+	  });
 	}
 }
 

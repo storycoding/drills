@@ -3,29 +3,83 @@ const socketAPI = require('./src/api').socketAPI;
 
 const port = process.env.port || 8000;
 
-let history = {
-	messages: [],
-	typing: ""
+server = {};
+
+server.history = {
+		author: {
+			target: {
+				messages: []
+			}
+		}
+};
+
+server.typing = {
+	author: {
+		target: {
+			content: "hello"
+		}
+	}
 }
 
+
+server.connections = 0;
+
 io.on('connection', (client) => {
+	console.log("a client has connected");
+	client.addedUser = false;
 
-	client.on('typing', (content) => {
-    history.typing = content;
+	client.on('addUser', (author) => {
+		if (addedUser) { return }
+
+		console.log("client.author on connection: " + author);
+		client.author = author;
+
+		server.connections++;
+		client.addedUser = true;
+	});
+
+
+  client.on('sendMessage', (message) => {
+  	console.log("sendMessage message: " + message);
+  	message = JSON.parse(message);
+  	const { author, target, content } = message;
+  	server.history[author][target].messages.push(content);
+
+  	console.log("server.history[author][target.]messages:", server.history[author][target].messages);
   });
 
-  client.on('sendMessage', (content) => {
-  	history.messages.push(content);
-  	console.log(history.messages);
+  client.on('getHistory', (request) => {
+  	console.log("getHistory request: " + request);
+  	request = JSON.parse(request);
+  	const { author, target } = request;
+
+   	console.log("server.history[author][target].messages:", server.history[author][target].messages);
+
+    client.emit('sendHistory', server.history[author][target].messages);
   });
 
-   client.on('disconnect', function(){
+	client.on('typed', (message) => {
+
+		message = JSON.parse(message);
+		const { author, target, content } = message;
+
+	  server.typing[author][target].content = content;
+	  
+	});
+
+  client.on('getTyping', (request) => {
+  	console.log("getTyping request: " + request);
+  	request = JSON.parse(request);
+  	const { author, target } = request;
+   	console.log("server.typing.author.target.content: " + server.typing.author.target.content);
+    client.emit('sendTyping', server.typing[author][target].content);
+  });
+
+  client.on('disconnect', function(){
+  	server.connections--;
+  	delete server.typing[client.author];
+
     console.log('client disconnected');
-  });
-
-   client.on('getHistory', function(){
-   	console.log(history.typing);
-    client.emit('sendHistory', history);
   });
 });
 
