@@ -9,7 +9,7 @@ CREATE TABLE users (
 
 CREATE TABLE connections (
 	user_id VARCHAR NOT NULL,
-	with_id VARCHAR NOT NULL
+	target_id VARCHAR NOT NULL
 )
 
 CREATE TABLE messages (
@@ -23,7 +23,7 @@ CREATE TABLE messages (
 INSERT INTO users (user_id) VALUES ('nuno');
 INSERT INTO users (user_id) VALUES ('jesus');
 
-INSERT INTO connections (user_id, with_id) VALUES ('nuno', 'jesus');
+INSERT INTO connections (user_id, target_id) VALUES ('nuno', 'jesus');
 
 INSERT INTO messages (content, author_id, target_id) VALUES ('Hey dude, how you doin?', 'nuno', 'jesus');
 
