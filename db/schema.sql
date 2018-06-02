@@ -16,7 +16,8 @@ CREATE TABLE messages (
 	id SERIAL PRIMARY KEY,
 	content VARCHAR NOT NULL,
 	author_id VARCHAR NOT NULL,
-	target_id VARCHAR NOT NULL
+	target_id VARCHAR NOT NULL,
+	date_sent TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
 );
 
 INSERT INTO users (user_id) VALUES ('nuno');
