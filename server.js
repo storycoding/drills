@@ -37,12 +37,18 @@ io.on('connection', (client) => {
 		if (addedUser) { return }
 
 		console.log("client.author on connection: " + author);
-		client.author = author;
-
+		client.author = "author";
+		client.target = "target";
 		server.connections++;
 		client.addedUser = true;
 	});
 
+	client.on('connect', (usernames) => {
+		usernames = JSON.parse(usernames);
+		client.author = usernames.author || "author";
+		client.target = usernames.target || "target";
+		client.emit("connectionResponse", `connected ${client.author} with ${client.target}`);
+	});
 
   client.on('sendMessage', (message) => {
   	message = JSON.parse(message);

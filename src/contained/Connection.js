@@ -14,6 +14,7 @@ class Connection extends Component {
 	handleSubmit = (event) => {
 		event.preventDefault();
 		console.log(this.state);
+		socketAPI.connect(this.state);
 		//trigger username and target change
 	}
 

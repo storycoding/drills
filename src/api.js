@@ -3,6 +3,11 @@ const socket = openSocket('http://localhost:8000');
 
 const socketAPI = {
 
+	connect: function(usernames) {
+		socket.emit('connect', JSON.stringify(usernames));
+		socket.on('connectionResponse', (response) => console.log(response));
+	},
+
 	sendMessage: function(message) {
 	  socket.emit('sendMessage', JSON.stringify(message) );
 	},
