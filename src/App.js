@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Chatbox from './Chatbox';
+import Connection from './contained/Connection.js';
+import Chatbox from './Chatbox.js';
 import HistoryContainer from './contained/HistoryContainer.js';
 import TypingContainer from './contained/TypingContainer.js';
 
@@ -16,6 +17,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <Connection/>
         <HistoryContainer/>
         <Chatbox/>
       </div>
