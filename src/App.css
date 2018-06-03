@@ -1,33 +1,81 @@
+body {
+  padding: 0px;
+  margin: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .App {
-  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.chatHistory {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  background-color: white;
+  padding: 10px;
+  overflow-y: scroll;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+.chatBubble {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: -webkit-fit-content;
+  border-radius: 25px;
   color: white;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
-.App-title {
-  font-size: 1.5em;
+.self {
+  align-self: flex-start;
+  background-color: blue;
+  left: 0px;
 }
 
-.App-intro {
-  font-size: large;
+.other {
+  align-self: flex-end;
+  background-color: red;
+  right: 0px;
 }
 
-div {
+.chatBox {
+  background-color: white;
+  overflow-y: scroll;
+  width: 100%;
+  max-width: 100%;
+  height: 20%;
+}
+
+.chatInput {
+  height: 100%;
+  width: 100%;
+  padding: 10px 20px 10px 20px;
+  font-size: 1em;
   border-width: 1px;
   border-style: solid;
+  border-color: lightgray;
+  resize: none;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.textarea#editor {
+  width:80%;
+  height:100%;
+  margin-left:10%;
+  margin-right:10%;
 }

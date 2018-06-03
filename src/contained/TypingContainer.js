@@ -28,7 +28,7 @@ class TypingContainer extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="chatBubble other">
 				<Typing typing={this.state}/>
 			</div>
 		);

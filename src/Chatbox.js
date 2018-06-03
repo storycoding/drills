@@ -19,6 +19,7 @@ class Chatbox extends Component {
 	}
 
 	handleInput = (event) => {
+		// if keypress is (e.which == 13)
 		console.log("handleInput event.target.value: ", event.target.value);
 		this.setState( {content : event.target.value} );
 		console.log("handleInput this.state: ", this.state );
@@ -30,10 +31,9 @@ class Chatbox extends Component {
 	}
 
 	render() {
-		return <div>
+		return <div className="chatBox">
 			<form onSubmit={this.handleSubmit}>
-				<input type="content" value={this.state.content} onChange={this.handleInput}/>
-				<input type="submit" value="Submit"/>
+				<textarea className="chatInput" type="content" value={this.state.content} onChange={this.handleInput}/>
 			</form>
 		</div>
 	}
