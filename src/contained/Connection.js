@@ -28,7 +28,6 @@ class Connection extends Component {
 
 	render () {
 
-
 		return (
 			<form className="connection" onSubmit={this.handleSubmit}>
 				<input

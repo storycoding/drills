@@ -15,14 +15,19 @@ class Chatbox extends Component {
 		event.preventDefault();
 		socketAPI.sendMessage(this.state);
 		this.setState( { content: "" } );
-		
 	}
 
 	handleInput = (event) => {
-		// if keypress is (e.which == 13)
 		console.log("handleInput event.target.value: ", event.target.value);
 		this.setState( {content : event.target.value} );
 		console.log("handleInput this.state: ", this.state );
+	}
+
+	handleKeyPress = (event) => {
+		if(event.key == "Enter") {
+			socketAPI.sendMessage(this.state);
+			this.setState( { content: "" } );
+		}
 	}
 
 	componentDidUpdate() {
@@ -33,7 +38,7 @@ class Chatbox extends Component {
 	render() {
 		return <div className="chatBox">
 			<form onSubmit={this.handleSubmit}>
-				<textarea className="chatInput" type="content" value={this.state.content} onChange={this.handleInput}/>
+				<textarea className="chatInput" type="content" value={this.state.content} onChange={this.handleInput} onKeyPress={this.handleKeyPress}/>
 			</form>
 		</div>
 	}

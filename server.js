@@ -33,12 +33,15 @@ io.on('connection', (client) => {
 	console.log("a client has connected");
 	client.addedUser = false;
 
+	client.author = "author"; // temp
+	client.target = "target"; // temp
+	server.history[client.author][client.target].messages = [];
+	server.typing[client.author][client.target].content = "";
+
 	client.on('addUser', (author) => {
 		if (addedUser) { return }
-
 		console.log("client.author on connection: " + author);
-		client.author = "author";
-		client.target = "target";
+		
 		server.connections++;
 		client.addedUser = true;
 	});
@@ -52,52 +55,50 @@ io.on('connection', (client) => {
 
   client.on('sendMessage', (message) => {
   	message = JSON.parse(message);
+  	const { content } = message;
 
-  	const { author, target, content } = message;
-
-  	server.history[author][target].messages.push(
+  	server.history[client.author][client.target].messages.push(
   		{
-	  		author: author,
-	  		content: content
+	  		author: client.author,
+	  		content: client.content
   		});
   	console.log("======================================");
   	console.log("sendMessage message: " + message);
-  	console.log("server.history[author][target]messages:", server.history[author][target].messages);
+  	console.log("server.history[author][target]messages:", server.history[client.author][client.target].messages);
   	console.log("======================================");
   });
 
   client.on('getHistory', (request) => {
   	console.log("getHistory request: " + request);
   	request = JSON.parse(request);
-  	const { author, target } = request;
 
-   	console.log("server.history[author][target].messages:", server.history[author][target].messages);
+   	console.log("server.history[author][target].messages:", server.history[client.author][client.target].messages);
 
     client.emit( 'sendHistory',
-    	JSON.stringify(server.history[author][target].messages));
+    	JSON.stringify(server.history[client.author][client.target].messages));
   });
 
 	client.on('typed', (message) => {
 
 		message = JSON.parse(message);
-		const { author, target, content } = message;
+		const { content } = message;
 
-	  server.typing[author][target].content = content;
+	  server.typing[client.author][client.target].content = content;
 	  
 	});
 
   client.on('getTyping', (request) => {
   	console.log("getTyping request: " + request);
   	request = JSON.parse(request);
-  	const { author, target } = request;
-   	console.log("server.typing.author.target.content: " + server.typing.author.target.content);
-    client.emit('sendTyping', server.typing[author][target].content);
+
+  	//const { author, target } = request;
+   	console.log("server.typing.author.target.content: " + server.typing[client.author][client.target].content);
+    client.emit('sendTyping', server.typing[client.author][client.target].content);
   });
 
   client.on('disconnect', function(){
   	server.connections--;
   	delete server.typing[client.author];
-
     console.log('client disconnected');
   });
 });
